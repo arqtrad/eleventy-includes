@@ -1,6 +1,19 @@
 {% extends "layouts/base.njk" %}
 {% block pagecontent %}
 <script src="/assets/leaflet/leaflet.js"></script>
+<nav aria-label="breadcrumb">
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="/">{{ ui_text[lang].breadcrumb_home_label }}</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a href="../" class="capitalize-first">{{ tags[0] }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+      {{ title }}
+    </li>
+  </ul>
+</nav>
 <article class="has-infobox order-md-2">
   {{ content | safe }}
 </article>
