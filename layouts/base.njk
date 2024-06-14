@@ -19,25 +19,20 @@
 {%- else -%}
 <div class="container py-5">
   <h1 class="display-1">
-    {% if title %}{{ title}}{% else %}{{ site.title }}{% endif %}
+    {% if title %}{{ title | safe }}{% else %}{{ site.title }}{% endif %}
     {% if subtitle -%}
     <span class="subtitle d-block h-3">
-      {{ subtitle }}
+      {{ subtitle | safe  }}
     </span>
     {%- endif %}
   </h1>
   {% if excerpt %}
-  <div class="lead">
+  <p class="lead">
     {{ excerpt | safe }}
-  </div>
+  </p>
   {%- endif %}
 </div>
 {%- endif %}
-{% if page.url != "/" and site.breadcrumbs %}
-  {% if not paginator %}
-    {% include "partials/breadcrumbs.njk" %}
-  {% endif %}
-{% endif %}
 {%- endblock %}
 
 <main{% if conformsTo %} itemscope itemtype="{{ conformsTo }}"{% endif %}>
@@ -48,7 +43,10 @@
       <a class="btn btn-outline-secondary" href="#sidebar">{{ ui_text[lang].skip_primary_nav }}</a>
     </small>
   {%- endif %}
-  {% block pagecontent -%}
+  {%- block pagecontent %}
+  {%- if page.url != "/" and site.breadcrumbs %}
+    {%- include "partials/breadcrumb.njk" %}
+  {%- endif %}
     <article>
       {{ content | safe }}
     </article>
