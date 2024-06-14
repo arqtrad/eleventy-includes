@@ -1,7 +1,7 @@
 <div class="col">
   <div class="card h-100 shadow-sm"{% if post.data.conformsTo %} itemscope itemtype="{{ post.data.conformsTo }}"{% endif %}>
-    <img class="card-img-top" src="{{ post.data.header.teaser }}" />
-    <div class="card-header">
+    <img itemprop="image" class="card-img-top" src="{{ post.data.header.teaser }}" />
+    <div class="card-header" itemprop="address">
       {% if post.data.coverage.spatial.location.country %}
         <span class="pe-1" aria-label="{{ ui_text[site.locale].country[post.data.coverage.spatial.location.country] }}">
           {{ post.data.coverage.spatial.location.country | countryEmoji }}
@@ -14,10 +14,10 @@
       {{ post.data.coverage.spatial.location.city }}
     </div>
     <div class="card-body">
-      <h3 class="card-title">
+      <h3 class="card-title" itemprop="name">
         <a href="{{ post.url }}" class="stretched-link">{{ post.data.title | safe }}</a>
       </h3>
-      <p class="card-text">{{ post.data.excerpt | safe }}</p>
+      <p class="card-text" itemprop="description">{{ post.data.excerpt | safe }}</p>
     </div>
       <div class="card-footer text-right">
         <small class="text-body-secondary">{{ ui_text[lang].date_label }} {{ post.date | dateFilter }}</small>
