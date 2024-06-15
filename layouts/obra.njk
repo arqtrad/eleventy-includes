@@ -1,8 +1,122 @@
 {% extends "layouts/base.njk" %}
+
 {% block htmlhead -%}
-  {% include "partials/head.njk" %}
-  <link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" />
+{% include "partials/head.njk" %}
+{%- if bibliographicCitation %}
+  {%- if bibliographicCitation.href %}
+<link rel="DCTERMS.bibliographicCitation"
+      href="{{ bibliographicCitation.href }}"
+  {%- elseif bibliographicCitation.text %}
+<meta name="DCTERMS.bibliographicCitation"
+      content="{{ bibliographicCitation.text }}"
+  {%- endif %}
+      />
+{%- endif %}
+<link rel="DCTERMS.conformsTo"
+      href="{{ conformsTo }}"
+      />
+{%- if contributor %}
+  {%- for c in contributor %}
+<meta name="DCTERMS.contributor"
+      content="{{ c.name }}{% if c.role %} ({{ c.role }}{% if c.attribution %}, {{ c.attribution }}{% endif %}){% endif %}"
+      />
+  {%- endfor %}
+{%- endif %}
+{%- if coverage.temporal.events %}
+  {%- for e in coverage.temporal.events %}
+    {%- if ( e.type === 'creation' ) %}
+<meta name="DCTERMS.created"
+      content="
+      {%- if e.start_date -%}
+        {{ e.start_date.year }}
+        {%- if e.start_date.month -%}
+          -{{ e.start_date.month }}
+          {%- if e.start_date.day -%}
+            -{{ e.start_date.day }}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endif -%}
+      {%- if e.end_date -%}
+        /{{ e.end_date.year }}
+        {%- if e.end_date.month -%}
+          -{{ e.end_date.month }}
+          {%- if e.end_date.day -%}
+            -{{ e.end_date.day }}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endif -%}
+      "
+      />
+    {%- endif %}
+  {%- endfor %}
+{%- endif %}
+{%- if creator %}
+  {%- for c in creator %}
+<meta name="DCTERMS.creator"
+      content="{{ c.name }}{% if c.attribution %} ({{ c.attribution }}){% endif %}"
+      />
+  {%- endfor %}
+{%- endif %}
+{%- if format.extent %}
+  {%- for e in format.extent %}
+<meta name="DCTERMS.extent"
+      content="{{ e.type }}: {{ e.measurements }} {{ e.unit }}"
+      />
+  {%- endfor %}
+{%- endif %}
+{%- if identifier %}
+  {%- for i in identifier %}
+    {%- set label %}{% if i.source %}{{ i.source }}{% endif %}{% if i.refid %} {{ i.refid }}{% endif %}{% if i.text %} {{ i.text }}{% endif %}{% endset %}
+    {%- if i.href %}
+<link rel="DCTERMS.identifier"
+      href="{{ i.href }}"
+      title="{{ label }}"
+    {%- else %}
+<meta name="DCTERMS.identifier"
+      content="{{ label }}"
+    {%- endif %}
+      />
+  {%- endfor %}
+{%- endif %}
+{%- if format.medium.material %}
+  {%- for m in format.medium.material %}
+<meta name="DCTERMS.medium"
+      content="{% if m.type %}{{ m.type }}: {% endif %}{{ m.text }}"
+      />
+  {%- endfor %}
+{%- endif %}
+{%- if relation %}
+  {%- for r in relation %}
+    {%- set label %}{{ r.type }}:{% if r.relids %} {{ r.relids }}{% endif %}{% if r.text %} {{ r.text }}{% endif %}{% endset %}
+    {%- if r.href %}
+<link rel="DCTERMS.relation"
+      href="{{ r.href }}"
+      title="{{ label }}"
+    {%- else %}
+<meta name="DCTERMS.relation"
+      content="{{ label }}"
+    {%- endif %}
+      />
+  {%- endfor %}
+{%- endif %}
+{%- if subject %}
+  {%- for s in subject %}
+    {%- if s.href %}
+<link rel="DCTERMS.subject"
+      href="{{ s.href }}"
+      title="{{ s.text }}"
+    {%- elseif s.text %}
+<meta name="DCTERMS.subject"
+      content="{{ s.text }}"
+    {%- endif %}
+      />
+  {%- endfor %}
+{%- endif %}
+{%- if type %}
+<meta name="DCTERMS.type" content="{{ type.name }}" />
+{%- endif %}
 {%- endblock %}
+
 {% block pagecontent %}
 <script src="/assets/leaflet/leaflet.js"></script>
 {% include "partials/breadcrumb.njk" %}
