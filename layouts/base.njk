@@ -7,8 +7,8 @@
 {% block htmlhead -%}
   {% include "partials/head.njk" %}
 {%- endblock %}
-<script src="/assets/lunr/lunr.min.js"></script>
-<script src="/assets/js/search.js"></script>
+<script src="{{ '/assets/lunr/lunr.min.js' | htmlBaseUrl }}"></script>
+<script src="{{ '/assets/js/search.js' | htmlBaseUrl }}"></script>
 </head>
 <body>
 {%- block nav %}
