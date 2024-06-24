@@ -7,11 +7,11 @@
   {%- set title = site.title -%}
   {%- set metaTitle = title -%}
 {%- endif -%}
-{%- if not excerptMeta -%}
+{%- if not descriptionMeta -%}
   {%- if excerpt -%}
-    {%- set excerptMeta = excerpt -%}
+    {%- set descriptionMeta = excerpt -%}
   {%- else -%}
-    {%- set excerptMeta = site.description -%}
+    {%- set descriptionMeta = site.description -%}
   {%- endif -%}
 {%- endif -%}
 {%- if ( date and not dateMeta ) -%}
