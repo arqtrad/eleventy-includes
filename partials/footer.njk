@@ -1,7 +1,5 @@
-{%- if tags[0] -%}
-  {%- set currentCollection = tags[0] -%}
-{%- elif tags -%}
-  {%- set currentCollection = tags -%}
+{%- if page.collection -%}
+  {%- set currentCollection = page.collection -%}
 {%- endif -%}
 {%- if currentCollection -%}
 {% set collectionToNavigate = collections[currentCollection] %}
