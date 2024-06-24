@@ -1,26 +1,22 @@
 <div class="col">
   <div class="card h-100 shadow-sm"{% if post.data.conformsTo %} itemscope itemtype="{{ post.data.conformsTo }}"{% endif %}>
     <img itemprop="image" class="card-img-top" src="{{ post.data.header.teaser }}" />
-    <div class="card-header" itemprop="address">
-      {% if post.data.coverage.spatial.location.country %}
-        <span class="pe-1" aria-label="{{ ui_text[site.locale].country[post.data.coverage.spatial.location.country] }}">
-          {{ post.data.coverage.spatial.location.country | countryEmoji }}
-        </span>
-      {% endif %}
-      {% if post.data.coverage.spatial.location.state %}
-        {{ post.data.coverage.spatial.location.state }}
-        <i class="bi bi-chevron-compact-right" aria-hidden="true"></i>
-      {% endif %}
-      {{ post.data.coverage.spatial.location.city }}
-    </div>
+    <div class="card-header d-flex text-end text-body-secondary fs-5">
+      <a class="ps-3 link-secondary ms-auto" href="{{ a.url }}" alt="Notas de aula" title="Notas de aula" aria-label="Notas de aula">
+        <i class="bi bi-book"></i>
+      </a>
+      <a class="ps-3 link-secondary" href="#" alt="Slides" title="Slides" aria-label="Slides">
+        <i class="bi bi-easel"></i>
+      </a>
+    </div><!--/.card-header-->
     <div class="card-body">
       <h3 class="card-title" itemprop="name">
         <a href="{{ post.url }}" class="stretched-link">{{ post.data.title | safe }}</a>
       </h3>
       <p class="card-text" itemprop="description">{{ post.data.excerpt | safe }}</p>
-    </div>
-      <div class="card-footer text-right">
-        <small class="text-body-secondary">{{ ui_text[lang].date_label }} {{ post.date | dateFilter }}</small>
-      </div>
-  </div>
-</div>
+    </div><!--/.card-body-->
+    <div class="card-footer text-right">
+      <small class="text-body-secondary">{{ post.date | dateFilter }}</small>
+    </div><!--/.card-footer-->
+  </div><!--/.card-->
+</div><!--/.col-->
