@@ -28,7 +28,7 @@
         </span>
         {%- endif %}
       </h1>
-      {% if description %}{% set excerpt = description %}{% endif %}
+      {% if ( description and not excerpt ) %}{% set excerpt = description %}{% endif %}
       {% if excerpt %}<div class="lead">
         {{ excerpt | safe }}
       </div>{% endif %}
