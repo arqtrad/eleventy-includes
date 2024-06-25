@@ -19,7 +19,10 @@
 
 <div class="position-relative mb-5">
   <div id="hero" class="page__hero{% if header.overlay_color or header.overlay_image %}--overlay{% endif %}{% if page.url == "/" %} hero-home{% endif %}{% if header.suppressTitle %} suppress-title{% endif %}">
-    <div class="container py-5 flex-column">
+  {%- if ( sidebar or author_profile or toc ) %}
+    <div class="sidebar">&nbsp;</div>
+  {%- endif %}
+    <div class="container py-5 flex-column{% if ( sidebar or author_profile or toc ) %} has-sidebar{% endif %}">
       <h1 class="display-1">
         {% if title %}{{ title | safe }}{% else %}{{ site.title }}{% endif %}
         {% if subtitle -%}
