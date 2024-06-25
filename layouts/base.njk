@@ -10,7 +10,7 @@
 <script src="{{ '/assets/lunr/lunr.min.js' | htmlBaseUrl }}"></script>
 <script src="{{ '/assets/js/search.js' | htmlBaseUrl }}"></script>
 </head>
-<body>
+<body data-bs-spy="scroll" data-bs-target="#toc">
 {%- block nav %}
   {% include "partials/nav.njk" %}
 {%- endblock %}
