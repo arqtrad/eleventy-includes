@@ -1,10 +1,10 @@
 {% if not lang %}{% set lang = site.locale %}{% endif %}
 {%- if author_profile %}
 <div class="author__profile" itemscope itemtype="https://schema.org/Person">
-  {% if author %}
+  {% if ( author and members[author] ) %}
     {% set author = members[author] %}
   {% else %}
-    {% set author = members[site.name] %}
+    {% set author = site.author %}
   {% endif %}
   {% include "partials/author-profile.njk" %}
 </div>
