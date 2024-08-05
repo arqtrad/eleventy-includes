@@ -23,6 +23,7 @@
 <title>{{ metaTitle }}</title>
 <link rel="canonical" href="{{ currentUrl }}" />
 <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+<link href="/_pagefind/pagefind-ui.css" rel="stylesheet">
 {%- if css %}
 {%- if css[0] %}
 {%- for css in css %}
@@ -40,7 +41,7 @@
 <meta name="author" content="{{ authorMeta }}" />
 {%- endfor -%}
 {%- if keywords %}
-<meta name="keywords" content="{% for keyword in keywords %}{{ keyword }}{% if not loop.last %}, {% endif %}{% endfor %}" />
+<meta name="keywords" data-pagefind-index-attrs="content" data-pagefind-weight="9" content="{% for keyword in keywords %}{{ keyword }}{% if not loop.last %}, {% endif %}{% endfor %}" />
 {%- endif %}
 <meta property="og:site_name" content="{{ site.title }}" />
 <meta property="og:title" content="{{ title }}" />
@@ -65,5 +66,5 @@
 <meta name="DCTERMS.date" content="{{ dateMeta }}" />
 {%- endif %}
 {%- if descriptionMeta %}
-<meta name="DCTERMS.description" content="{{ descriptionMeta }}" />
+<meta name="DCTERMS.description" data-pagefind-index-attrs="content" data-pagefind-weight="8" content="{{ descriptionMeta }}" />
 {%- endif %}
