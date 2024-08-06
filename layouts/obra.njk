@@ -121,7 +121,7 @@
 <script src="/assets/leaflet/leaflet.js"></script>
 {% include "partials/breadcrumb.njk" %}
 <article data-pagefind-body class="has-infobox order-md-2">
-  <div data-pagefind-title data-pagefind-weight="10" aria-hidden="true" class="d-none" itemprop="name">{{ title | safe }}</div>
+  <div data-pagefind-title data-pagefind-meta="title" data-pagefind-weight="10" aria-hidden="true" class="d-none" itemprop="name">{{ title | safe }}</div>
   {{ content | safe }}
 </article>
 

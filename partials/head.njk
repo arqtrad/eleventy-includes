@@ -47,12 +47,12 @@
 <meta property="og:title" content="{{ title }}" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="{{ currentUrl }}" />
-{%- if social_image or teaser %}
+{%- if social_image or header.teaser %}
 {%- if not social_image -%}
-  {%- set social_image = teaser -%}
+  {%- set social_image = header.teaser -%}
 {%- endif -%}
 <meta name="twitter:card" content="summary_large_image" />
-<meta property="og:image" content="{{ social_image }}" />
+<meta property="og:image" data-pagefind-meta="image[content]" content="{{ social_image }}" />
 <meta name="twitter:image" content="{{ social_image }}" />
 <meta property="og:image:alt" content="Page image for {{ site.title }}" />
 <meta name="twitter:image:alt" content="Page image for {{ site.title }}" />
