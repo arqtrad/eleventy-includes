@@ -18,6 +18,7 @@
 {%- if contributor %}
   {%- for c in contributor %}
 <meta name="DCTERMS.contributor"
+      data-pagefind-index-attrs="content"
       content="{{ c.name }}{% if c.role %} ({{ c.role }}{% if c.attribution %}, {{ c.attribution }}{% endif %}){% endif %}"
       />
   {%- endfor %}
@@ -53,6 +54,7 @@
 {%- if creator %}
   {%- for c in creator %}
 <meta name="DCTERMS.creator"
+      data-pagefind-index-attrs="content"
       content="{{ c.name }}{% if c.attribution %} ({{ c.attribution }}){% endif %}"
       />
   {%- endfor %}
@@ -71,9 +73,11 @@
 <link rel="DCTERMS.identifier"
       href="{{ i.href }}"
       title="{{ label }}"
+      data-pagefind-index-attrs="title"
     {%- else %}
 <meta name="DCTERMS.identifier"
       content="{{ label }}"
+      data-pagefind-index-attrs="content"
     {%- endif %}
       />
   {%- endfor %}
@@ -82,6 +86,7 @@
   {%- for m in format.medium.material %}
 <meta name="DCTERMS.medium"
       content="{% if m.type %}{{ m.type }}: {% endif %}{{ m.text }}"
+      data-pagefind-index-attrs="content"
       />
   {%- endfor %}
 {%- endif %}
@@ -105,15 +110,20 @@
 <link rel="DCTERMS.subject"
       href="{{ s.href }}"
       title="{{ s.text }}"
+      data-pagefind-index-attrs="title"
     {%- elseif s.text %}
 <meta name="DCTERMS.subject"
       content="{{ s.text }}"
+      data-pagefind-index-attrs="content"
     {%- endif %}
       />
   {%- endfor %}
 {%- endif %}
 {%- if type %}
-<meta name="DCTERMS.type" content="{{ type.name }}" />
+<meta name="DCTERMS.type"
+      content="{{ type.name }}"
+      data-pagefind-index-attrs="content"
+      />
 {%- endif %}
 {%- endblock %}
 
@@ -121,7 +131,6 @@
 <script src="/assets/leaflet/leaflet.js"></script>
 {% include "partials/breadcrumb.njk" %}
 <article data-pagefind-body class="has-infobox order-md-2">
-  <div data-pagefind-title data-pagefind-meta="title" data-pagefind-weight="10" aria-hidden="true" class="d-none" itemprop="name">{{ title | safe }}</div>
   {{ content | safe }}
 </article>
 
@@ -129,17 +138,23 @@
   <div class="card">
     <div id="map" itemprop="hasMap" class="card-img-top" style="width: 100%; height: 400px;"></div>
     <ul class="list-group list-group-flush">
-      <li itemprop="address" data-pagefind-geo data-pagefind-weight="7" class="list-group-item">
+      <li itemprop="address" data-pagefind-body data-pagefind-weight="7" class="list-group-item">
         {% if coverage.spatial.location.country %}
+          <span data-pagefind-filter="country[aria-label]"
+                aria-label="{{ ui_text[lang].country[coverage.spatial.location.country] }}">
           {{ coverage.spatial.location.country | countryEmoji }}
-          {{ ui[coverage.spatial.location.country] }}
+          </span>
         {% endif %}
         {% if coverage.spatial.location.state %}
-          {{ coverage.spatial.location.state }}
+          <span data-pagefind-filter="state">
+            {{ coverage.spatial.location.state }}
+          </span>
           <i class="bi bi-chevron-compact-right" aria-hidden="true"></i>
         {% endif %}
         {% if coverage.spatial.location.city %}
+          <span data-pagefind-filter="city">
           {{ coverage.spatial.location.city }}
+          </span>
         {% endif %}
       </li>
       <li class="list-group-item">
@@ -152,12 +167,17 @@
       </li>
       <li class="list-group-item">
         {% if authors %}
-          Responsáveis:
+          {{ ui_text[lang].author_reg_pl }}:
           {% for author in authors %}
-            {{ members[author].name }}
+          <span data-pagefind-filter="author">
+            {{ members[author].name }}{% if not loop.last %}; {% endif %}
+          </span>
           {% endfor %}
         {% elif author %}
-          Responsável: {{ members[author].name }}
+          {{ ui_text[lang].author_reg_sg }}:
+          <span data-pagefind-filter="author">
+            {{ members[author].name }}
+          </span>
         {% endif %}
       </li>
     </ul>

@@ -41,7 +41,11 @@
 <meta name="author" content="{{ authorMeta }}" />
 {%- endfor -%}
 {%- if keywords %}
-<meta name="keywords" data-pagefind-index-attrs="content" data-pagefind-weight="9" content="{% for keyword in keywords %}{{ keyword }}{% if not loop.last %}, {% endif %}{% endfor %}" />
+<meta name="keywords"
+      data-pagefind-index-attrs="content"
+      data-pagefind-weight="9"
+      content="{% for keyword in keywords %}{{ keyword }}{% if not loop.last %}, {% endif %}{% endfor %}"
+      />
 {%- endif %}
 <meta property="og:site_name" content="{{ site.title }}" />
 <meta property="og:title" content="{{ title }}" />
@@ -61,10 +65,18 @@
 <meta name="twitter:description" content="{{ descriptionMeta }}" />
 <meta property="og:description" content="{{ descriptionMeta }}" />
 {%- endif %}
-<meta name="DCTERMS.title" content="{{ metaTitle }}" />
+<meta name="DCTERMS.title"
+      data-pagefind-index-attrs="content"
+      data-pagefind-meta="title[content]"
+      content="{{ title }}"
+      />
 {%- if dateMeta %}
 <meta name="DCTERMS.date" content="{{ dateMeta }}" />
 {%- endif %}
 {%- if descriptionMeta %}
-<meta name="DCTERMS.description" data-pagefind-index-attrs="content" data-pagefind-weight="8" content="{{ descriptionMeta }}" />
+<meta name="DCTERMS.description"
+      data-pagefind-index-attrs="content"
+      data-pagefind-weight="8"
+      content="{{ descriptionMeta }}"
+      />
 {%- endif %}
