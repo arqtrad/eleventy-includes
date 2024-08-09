@@ -1,7 +1,5 @@
-{%- if tags[0] -%}
-  {%- set currentCollection = tags[0] -%}
-{%- elif tags -%}
-  {%- set currentCollection = tags -%}
+{%- if page.collection -%}
+  {%- set currentCollection = page.collection -%}
 {%- endif -%}
 {%- if currentCollection -%}
 {% set collectionToNavigate = collections[currentCollection] %}
@@ -37,10 +35,10 @@
         </a>
       </li>
     {%- endif %}{%- endfor %}
-    </ul>
+    </ul><!--/.nav-->
   {%- endif %}
   </footer>
-</div>
+</div><!--/.container-fluid-->
 
-<script src="{{ '/assets/js/main.js' }}"></script>
+<script src="{{ '/assets/js/main.js' | htmlBaseUrl }}"></script>
 <script src="/_pagefind/pagefind-ui.js" onload="new PagefindUI({ element: '#search', showImages: false });"></script>

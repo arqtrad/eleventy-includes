@@ -7,28 +7,29 @@
 {% block htmlhead -%}
   {% include "partials/head.njk" %}
 {%- endblock %}
-<script src="/assets/lunr/lunr.min.js"></script>
-<script src="/assets/js/search.js"></script>
+<script src="{{ '/assets/lunr/lunr.min.js' | htmlBaseUrl }}"></script>
+<script src="{{ '/assets/js/search.js' | htmlBaseUrl }}"></script>
 </head>
 <body>
-{% block nav -%}
+{%- block nav %}
   {% include "partials/nav.njk" %}
 {%- endblock %}
 
-{% block pagetitle -%}
-{% if header -%}
+{%- block pagetitle %}
+{%- if header %}
   {% include "partials/hero.njk" %}
-{%- else -%}
+{%- else %}
 <div class="container py-5">
   <h1 class="display-1">
-    {% if title %}{{ title | safe }}{% else %}{{ site.title }}{% endif %}
-    {% if subtitle -%}
+    {%- if title %}{{ title | safe }}{%- else %}{{ site.title }}{%- endif %}
+    {%- if subtitle %}
     <span class="subtitle d-block h-3">
       {{ subtitle | safe  }}
     </span>
     {%- endif %}
   </h1>
-  {% if excerpt %}
+  {%- if (description and not excerpt) %}{%- set excerpt = description %}{%- endif %}
+  {%- if excerpt %}
   <p class="lead">
     {{ excerpt | safe }}
   </p>
