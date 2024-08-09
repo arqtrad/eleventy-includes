@@ -213,11 +213,12 @@
 <!--Leaflet map generator-->
 <script>
   var map = L.map('map').setView([{{ coverage.spatial.location.lat }}, {{ coverage.spatial.location.long }}], {{ coverage.spatial.location.zoom }});
-  const marker = L.marker([{{ coverage.spatial.location.lat }}, {{ coverage.spatial.location.long }}]).addTo(map);
-  const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  L.marker([{{ coverage.spatial.location.lat }}, {{ coverage.spatial.location.long }}]).addTo(map);
+  L.tileLayer('https://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map);
+  L.control.scale().addTo(map);
 </script>
 <!--/Leaflet map generator-->
 {% endblock %}
