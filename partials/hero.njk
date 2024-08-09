@@ -38,7 +38,7 @@
       {% if header.actions %}
         <p class="action">
         {% for action in header.actions %}
-        <a href="{{ action.href }}"{% if action.btn_class %} class="{{ action.btn_class }}"{% endif %}>
+        <a href="{{ action.href }}"{% if action.btn_class %} class="my-3 btn {{ action.btn_class }}"{% endif %}>
           {{ action.label | safe }}
         </a>
         {% endfor %}

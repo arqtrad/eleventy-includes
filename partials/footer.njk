@@ -1,20 +1,3 @@
-{%- if page.collection -%}
-  {%- set currentCollection = page.collection -%}
-{%- endif -%}
-{%- if currentCollection -%}
-{% set collectionToNavigate = collections[currentCollection] %}
-{% set previousPost = collectionToNavigate | getPreviousCollectionItem %}
-{% set nextPost = collectionToNavigate | getNextCollectionItem %}
-{% if previousPost or nextPost %}
-<div class="container">
-  <div class="row justify-content-center">
-    {% include "partials/prev-next.njk" %}
-  </div><!--/.col-->
-</div><!--/.container-->
-{% endif %}
-{%- endif -%}
-
-<div class="container-fluid">
   <footer class="page-footer">
     <div class="col-md-4 d-flex align-items-center">
       <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
@@ -38,7 +21,6 @@
     </ul><!--/.nav-->
   {%- endif %}
   </footer>
-</div><!--/.container-fluid-->
 
 <script src="{{ '/assets/js/main.js' | htmlBaseUrl }}"></script>
 <script src="/_pagefind/pagefind-ui.js" onload="new PagefindUI({ element: '#search', showImages: false });"></script>

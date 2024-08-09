@@ -13,34 +13,32 @@
   </symbol>
 </svg>
 
-<header class="px-3 py-1 border-bottom">
-  <div class="container-fluid">
-    <nav id="site-nav" class="masthead">
-      <a href="/" class="site-title">
-        <svg class="bi me-2" width="36" height="36"><use xlink:href="#arqtrad" fill="currentColor" /></svg>
-        {{ site.title }}
-        {%- if site.subtitle %}
-        <span class="site-subtitle">
-          {{ site.subtitle }}
-        </span>
-        {%- endif %}
-      </a>
+<div class="container-fluid">
+  <nav id="site-nav" class="masthead">
+    <a href="/" class="site-title">
+      <svg class="bi me-2" width="36" height="36"><use xlink:href="#arqtrad" fill="currentColor" /></svg>
+      {{ site.title }}
+      {%- if site.subtitle %}
+      <span class="site-subtitle">
+        {{ site.subtitle }}
+      </span>
+      {%- endif %}
+    </a>
 
-      {% if navigation.main %}
-      <ul class="nav">
-        {% for m in navigation.main -%}
-        <li>
-          <a href="{{ m.url }}" {% if m.target %}target="{{ m.target }}" {% endif %}class="nav-link{% if m.class %} {{ m.class }}{% endif %}">
-            {{ m.title | safe }}
-          </a>
-        </li>
-        {%- endfor %}
-      </ul>
-      {% endif %}
+    {% if navigation.main %}
+    <ul class="nav">
+      {% for m in navigation.main -%}
+      <li>
+        <a href="{{ m.url }}" {% if m.target %}target="{{ m.target }}" {% endif %}class="nav-link{% if m.class %} {{ m.class }}{% endif %}">
+          {{ m.title | safe }}
+        </a>
+      </li>
+      {%- endfor %}
+    </ul>
+    {% endif %}
 
-      <div id="search" class="col-12 col-lg-auto my-1 me-lg-3" role="search">
-      </div>
+    <div id="search" class="col-12 col-lg-auto my-1 me-lg-3" role="search">
+    </div>
 
-    </nav>
-  </div>
-</header>
+  </nav>
+</div>

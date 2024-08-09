@@ -1,0 +1,34 @@
+{% extends "layouts/base.njk" %}
+
+{%- block htmlhead %}
+  {% include "partials/head.njk" %}
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+{%- endblock %}
+{%- block bodyClasses %}
+<body class="splash">
+{%- endblock %}
+
+{%- block nav %}
+<header class="fixed-top">
+  {% include "partials/nav.njk" %}
+</header>
+{%- endblock %}
+ 
+{%- block pagetitle %}
+  {%- if header %}
+    {% include "partials/hero.njk" %}
+  {%- endif %}
+{%- endblock %}
+
+{%- block container %}
+{{ content | safe }}
+{%- endblock %}
+
+{% block after %}
+{% endblock %}
+
+{% block pagefooter -%}
+<div class="container-fluid fixed-bottom">
+  {% include "partials/footer.njk" %}
+</div><!--/.container-fluid-->
+{%- endblock %}

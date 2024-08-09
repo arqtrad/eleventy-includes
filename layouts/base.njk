@@ -7,12 +7,14 @@
 {% block htmlhead -%}
   {% include "partials/head.njk" %}
 {%- endblock %}
-<script src="{{ '/assets/lunr/lunr.min.js' | htmlBaseUrl }}"></script>
-<script src="{{ '/assets/js/search.js' | htmlBaseUrl }}"></script>
 </head>
+{%- block bodyClasses %}
 <body>
+{%- endblock %}
 {%- block nav %}
+<header>
   {% include "partials/nav.njk" %}
+</header>
 {%- endblock %}
 
 {%- block pagetitle %}
@@ -44,6 +46,7 @@
     <a class="btn btn-outline-secondary" href="#sidebar">{{ ui_text[lang].skip_primary_nav }}</a>
   </small>
 {%- endif %}
+{%- block container %}
 <div id="main" class="container{% if sidebar or author_profile %} has-sidebar{% endif %}">
   <div{% if conformsTo %} itemscope itemtype="{{ conformsTo }}"{% endif %} class="row{% if classes %} {{ classes }}{% endif %}">
   {%- block pagecontent %}
@@ -56,6 +59,7 @@
   {%- endblock %}
   </div><!-- /itemscope -->
 </div><!-- /#main -->
+{%- endblock %}
 {%- if sidebar or author_profile %}
 <div class="sidebar" id="sidebar">
   <a class="d-md-none" href="#main">{{ ui_text[lang].skip_content }}</a>
@@ -71,7 +75,10 @@
 {% endblock %}
 
 {% block pagefooter -%}
-{% include "partials/footer.njk" %}
+{% include "partials/end.njk" %}
+<div class="container-fluid">
+  {% include "partials/footer.njk" %}
+</div><!--/.container-fluid-->
 {%- endblock %}
 </body>
 </html>
