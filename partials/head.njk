@@ -22,17 +22,11 @@
 
 <title>{{ metaTitle }}</title>
 <link rel="canonical" href="{{ currentUrl }}" />
-<link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
 <link href="/_pagefind/pagefind-ui.css" rel="stylesheet">
-{%- if css %}
-{%- if css[0] %}
-{%- for css in css %}
+{%- if css %}{%- for css in css %}
 <link rel="stylesheet" type="text/css" href="{{ css }}" />
-{%- endfor %}
-{%- else %}
-<link rel="stylesheet" type="text/css" href="{{ css }}" />
-{%- endif %}
-{%- endif %}
+{%- endfor %}{%- endif %}
+<link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
 <link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" />
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
