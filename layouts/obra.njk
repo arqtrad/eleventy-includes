@@ -143,9 +143,9 @@
       </li>
       <li class="list-group-item">
         {% if date %}
-          Inclusão:
+          {{ schemata.ui_text[locale].date_added }}
         {% else %}
-          Última atualização: 
+          {{ schemata.ui_text[locale].date_label }}
         {% endif %}
         {{ page.date | dateFilter }}
       </li>
@@ -171,9 +171,17 @@
 
 {% block after %}
 <div class="container-fluid text-center my-5">
-{% if coverage.temporal %}
+{% if coverage.temporal.events %}
   {% set timelineData %}
-    {{ coverage.temporal | dump | safe }}
+  {
+    "title": {
+      "text": {
+        "headline": "{{ schemata.ui_text[locale].timeline_label }}"
+      }
+    },
+    "events":
+    {{ coverage.temporal.events | dump | safe }}
+  }
   {% endset %}
   {% include "partials/timeline.njk" %}
 {% endif %}
@@ -185,7 +193,7 @@
 {% endif %}
 
 {% if relation %}
-  <h2 id="iconografia" style="text-transform: capitalize;">{{ schemata.ui_text[locale].iconography }}</h2>
+  <h2 id="iconografia" style="text-transform: capitalize;">{{ schemata.ui_text[locale].iconography_label }}</h2>
   <div class="row g-3 mx-3">
   {% for post in media %}
     {% include "partials/album.njk" %}
