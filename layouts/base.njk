@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-{%- if not lang -%}
-  {%- set lang = site.locale -%}
+{%- if not locale -%}
+  {%- set locale = site.locale -%}
 {%- endif %}
-<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ lang }}" xml:lang="{{ lang }}"{% if page.dir %} dir="{{ dir }}"{% endif %}>
+{% set lang = locale | truncate(2, true, "") %}
+{% set site_lang = site.locale | truncate(2, true, "") %}
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ locale }}" xml:lang="{{ locale }}"{% if page.dir %} dir="{{ dir }}"{% endif %}>
 <head  profile="http://dublincore.org/specifications/dublin-core/dc-html/2008-08-04/">
 {% block htmlhead -%}
   {% include "partials/head.njk" %}
@@ -43,7 +45,7 @@
 <main>
 {%- if sidebar.nav %}
   <small class="d-md-none mb-5">
-    <a class="btn btn-outline-secondary" href="#sidebar">{{ ui_text[lang].skip_primary_nav }}</a>
+    <a class="btn btn-outline-secondary" href="#sidebar">{{ schemata.ui_text[locale].skip_primary_nav }}</a>
   </small>
 {%- endif %}
 {%- block container %}
@@ -62,7 +64,7 @@
 {%- endblock %}
 {%- if sidebar or author_profile %}
 <div class="sidebar" id="sidebar">
-  <a class="d-md-none" href="#main">{{ ui_text[lang].skip_content }}</a>
+  <a class="d-md-none" href="#main">{{ schemata.ui_text[locale].skip_content }}</a>
   {%- include "partials/sidebar.njk" -%}
 </div><!-- /.sidebar -->
 {%- endif %}
