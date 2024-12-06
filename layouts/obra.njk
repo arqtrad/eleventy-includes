@@ -186,12 +186,6 @@
   {% include "partials/timeline.njk" %}
 {% endif %}
 
-{% if dwg %}
-{% endif %}
-
-{% if docs %}
-{% endif %}
-
 {% if relation %}
   <h2 id="iconografia" style="text-transform: capitalize;">{{ schemata.ui_text[locale].iconography_label }}</h2>
   <div class="row g-3 mx-3">
@@ -199,18 +193,14 @@
     {% include "partials/album.njk" %}
   {% endfor %}
   </div><!--/.row-->
+  <h2 id="dwgs" style="text-transform: capitalize;">{{ schemata.ui_text[locale].dwgs_label }}</h2>
+  <div class="row g-3 mx-3">
+  {% for post in dwgs %}
+    {% include "partials/album.njk" %}
+  {% endfor %}
+  </div><!--/.row-->
 {% endif %}
 </div><!--/.container-fluid-->
 
-<!--Leaflet map generator-->
-<script>
-  var map = L.map('map').setView([{{ coverage.spatial.location.lat }}, {{ coverage.spatial.location.long }}], {{ coverage.spatial.location.zoom }});
-  L.marker([{{ coverage.spatial.location.lat }}, {{ coverage.spatial.location.long }}]).addTo(map);
-  L.tileLayer('https://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-  }).addTo(map);
-  L.control.scale().addTo(map);
-</script>
-<!--/Leaflet map generator-->
+{% include "partials/leafletjs.njk" %}
 {% endblock %}
