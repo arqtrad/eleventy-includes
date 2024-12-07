@@ -187,18 +187,25 @@
 {% endif %}
 
 {% if relation %}
+  {% set mediaCollection = collections.media %}
   <h2 id="iconografia" style="text-transform: capitalize;">{{ schemata.ui_text[locale].iconography_label }}</h2>
-  <div class="row g-3 mx-3">
-  {% for post in media %}
-    {% include "partials/album.njk" %}
+  <div class="archive__row">
+  {% for rel in relation %}
+    {% if rel.type != ( "isDocumentedBy" or "isSupplementedBy" ) %}
+      {% for post in mediaCollection %}
+        {% if post.fileSlug == rel.relids %}
+          {% include "partials/card-picture.njk" %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
   {% endfor %}
-  </div><!--/.row-->
+  </div><!--/.archive__row-->
   <h2 id="dwgs" style="text-transform: capitalize;">{{ schemata.ui_text[locale].dwgs_label }}</h2>
-  <div class="row g-3 mx-3">
+  <div class="archive__row">
   {% for post in dwgs %}
-    {% include "partials/album.njk" %}
+    {% include "partials/card-place.njk" %}
   {% endfor %}
-  </div><!--/.row-->
+  </div><!--/.archive__row-->
 {% endif %}
 </div><!--/.container-fluid-->
 

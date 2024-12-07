@@ -1,0 +1,19 @@
+<div class="col">
+  <div class="card h-100 shadow-sm"{% if post.data.conformsTo %} itemscope itemtype="{{ post.data.conformsTo }}"{% endif %}>
+    {% if post.data.href %}
+      {% set teaser = post.data.href %}
+    {% else %}
+      {% set teaser = ('/media/' + post.fileSlug + '.jpg') %}
+    {% endif %}
+    <img itemprop="image" class="card-img-top" src="{{ teaser }}" />
+    <div class="card-header card-title" itemprop="name">
+      <a href="{{ post.url }}" class="stretched-link">{{ post.data.title | safe }}</a>
+    </div>
+    <div class="card-body">
+      <small class="card-text" itemprop="description">{{ post.data.excerpt | safe }}</small>
+    </div>
+      <div class="card-footer text-right">
+        <small class="text-body-secondary">{{ ui_text[locale].date_label }} {{ post.created | dateFilter }}</small>
+      </div>
+  </div>
+</div>

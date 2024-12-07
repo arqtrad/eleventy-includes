@@ -5,7 +5,7 @@
 {%- if pagination %}
   <div class="archive__row">
   {%- if not paginationTemplate %}
-    {%- set paginationTemplate = "partials/album.njk" %}
+    {%- set paginationTemplate = "partials/card-place.njk" %}
   {%- endif %}
   {%- for post in pagination.items %}
     {% include paginationTemplate %}
