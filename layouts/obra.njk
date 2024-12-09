@@ -170,7 +170,7 @@
 {% endblock %}
 
 {% block after %}
-<div class="container-fluid text-center my-5">
+<div class="container-fluid text-center mb-5">
 {% if coverage.temporal %}
   {% set timelineData %}
   {
@@ -188,10 +188,10 @@
 
 {% if relation %}
   {% set mediaCollection = collections.media %}
-  <h2 id="iconografia" style="text-transform: capitalize;">{{ schemata.ui_text[locale].iconography_label }}</h2>
+  <h2 id="desenhos" style="text-transform: capitalize;">{{ schemata.ui_text[locale].dwgs_label }}</h2>
   <div class="archive__row">
   {% for rel in relation %}
-    {% if rel.type != ( "isDocumentedBy" or "isSupplementedBy" ) %}
+    {% if rel.type == ( "isDocumentedBy" or "isSupplementedBy" ) %}
       {% for post in mediaCollection %}
         {% if post.fileSlug == rel.relids %}
           {% include "partials/card-picture.njk" %}
@@ -200,10 +200,16 @@
     {% endif %}
   {% endfor %}
   </div><!--/.archive__row-->
-  <h2 id="dwgs" style="text-transform: capitalize;">{{ schemata.ui_text[locale].dwgs_label }}</h2>
+  <h2 id="iconografia" style="text-transform: capitalize;">{{ schemata.ui_text[locale].iconography_label }}</h2>
   <div class="archive__row">
-  {% for post in dwgs %}
-    {% include "partials/card-place.njk" %}
+  {% for rel in relation %}
+    {% if rel.type == ( "depictedIn" or "imageIs" or "planIs" ) %}
+      {% for post in mediaCollection %}
+        {% if post.fileSlug == rel.relids %}
+          {% include "partials/card-picture.njk" %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
   {% endfor %}
   </div><!--/.archive__row-->
 {% endif %}
