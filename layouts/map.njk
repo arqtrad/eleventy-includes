@@ -1,31 +1,42 @@
-{% extends "layouts/base.njk" %}
+{% extends "layouts/splash.njk" %}
 
 {%- block htmlhead %}
   {% include "partials/head.njk" %}
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 {%- endblock %}
 {%- block bodyClasses %}
-<body class="splash">
+<body class="h-100 w-100">
 {%- endblock %}
 
 {%- block nav %}
-<header class="fixed-top">
+<div class="page__hero--overlay d-flex flex-column w-100 h-100">
+  <header>
+  {% set splash = true %}
   {% include "partials/nav.njk" %}
-</header>
+  </header>
 {%- endblock %}
  
 {%- block pagetitle %}
-  {%- if header %}
-    {% include "partials/hero.njk" %}
-  {%- endif %}
+<div class="w-100 h-100 d-flex align-self-stretch align-items-stretch" style="height: 100%">
+  {{ content | safe }}
+{% if header.actions %}
+  <div class="action over-map align-items-center text-center">
+    {% for action in header.actions %}
+    <a href="{{ action.href }}"{% if action.btn_class %} class="my-5 mx-auto btn {{ action.btn_class }}"{% endif %}>
+      {{ action.label | safe }}
+    </a>
+  {% endfor %}
+  </div>
+{% endif %}
+</div>
 {%- endblock %}
 
 {%- block container %}
-{{ content | safe }}
 {%- endblock %}
 
 {% block pagefooter -%}
-<div class="container-fluid fixed-bottom">
-  {% include "partials/footer.njk" %}
-</div><!--/.container-fluid-->
+  <div class="align-self-bottom w-100 mx-0 mt-0">
+    {% include "partials/footer.njk" %}
+  </div><!--/.container-fluid-->
+</div>
 {%- endblock %}
