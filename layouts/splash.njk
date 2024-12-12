@@ -1,8 +1,16 @@
 {% extends "layouts/base.njk" %}
+
 {%- block nav %}
+<div class="page__hero--overlay splash d-flex flex-column w-100 h-100">
+  <header>
+  {% set splash = true %}
+  {% include "partials/nav.njk" %}
+  </header>
+{%- endblock %}
+
+{%- block pagetitle %}
 <style>
 .page__hero--overlay {
-  background-size: cover;
   background-image:
     {%- if header.overlay_filter -%}
     linear-gradient(rgba(255, 255, 255, {{ header.overlay_filter }}),
@@ -19,14 +27,7 @@
   }
 }
 </style>
-<div class="page__hero--overlay d-flex flex-column w-100 h-100 mb-5">
-  <header>
-  {% set splash = true %}
-  {% include "partials/nav.njk" %}
-  </header>
-{%- endblock %}
 
-{%- block pagetitle %}
   <div class="container py-5 h-100 d-flex align-self-stretch flex-column justify-content-center align-items-center">
     <h1 class="display-1 text-center w-100">
       {% if title %}{{ title | safe }}{% else %}{{ site.title }}{% endif %}
