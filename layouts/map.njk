@@ -1,4 +1,5 @@
-{% extends "layouts/splash.njk" %}
+{% extends "layouts/base.njk" %}
+{% set splash = true %}
 
 {%- block htmlhead %}
   {% include "partials/head.njk" %}
@@ -6,12 +7,8 @@
   <link rel="stylesheet" type="text/css" href="/assets/leaflet/leaflet.css" />
 {%- endblock %}
 
-{%- block bodyClasses %}
-<body class="h-100 w-100">
-{%- endblock %}
-
 {%- block nav %}
-<div class="page__title splash d-flex flex-column w-100 h-100">
+<div class="page__title d-flex flex-column w-100 h-100">
   <header>
   {% include "partials/nav.njk" %}
   </header>
@@ -37,7 +34,12 @@
 {%- block container %}
 {%- endblock %}
 
-{%- block after %}
+{% block pagefooter -%}
+  <div class="align-self-end w-100 mx-0 mt-0">
+    {% include "partials/footer.njk" %}
+  </div><!--/.align-self-end-->
+</div>
+
 <!--Leaflet map generator-->
 <script>
   var map = L.map('map', {
@@ -93,11 +95,4 @@
 {% endfor %}
 </script>
 <!--/Leaflet map generator-->
-{%- endblock %}
-
-{% block pagefooter -%}
-  <div class="align-self-bottom w-100 mx-0 mt-0">
-    {% include "partials/footer.njk" %}
-  </div><!--/.container-fluid-->
-</div>
 {%- endblock %}
