@@ -11,57 +11,60 @@
 {%- endblock %}
 </head>
 {%- block bodyClasses %}
-<body>
+<body{% if classes %} class="{% for class in classes %}{{ class }}{% if not loop.last %} {% endif %}{% endfor %}"{% endif %}>
 {%- endblock %}
 {%- block nav %}
-<header>
+<div class="page__title{% if header.overlay_color or header.overlay_image %}--overlay{% endif %}{% if splash %} splash{% endif %}">
+  <header>
   {% include "partials/nav.njk" %}
-</header>
+  </header>
 {%- endblock %}
 
 {%- block pagetitle %}
 {%- if header %}
-<style>
-.page__hero--overlay {
-  background-image:
-    {%- if header.overlay_filter -%}
-    linear-gradient(rgba(255, 255, 255, {{ header.overlay_filter }}),
-                    rgba(255, 255, 255, {{ header.overlay_filter }})),
-    {%- endif -%}
-    url('{{ header.overlay_image | htmlBaseUrl }}');
-  @media(prefers-color-scheme: dark) {
+  <style>
+  .page__title--overlay {
     background-image:
       {%- if header.overlay_filter -%}
-      linear-gradient(rgba(0, 0, 0, {{ header.overlay_filter }}),
-                      rgba(0, 0, 0, {{ header.overlay_filter }})),
+      linear-gradient(rgba(255, 255, 255, {{ header.overlay_filter }}),
+                      rgba(255, 255, 255, {{ header.overlay_filter }})),
       {%- endif -%}
       url('{{ header.overlay_image | htmlBaseUrl }}');
+    @media(prefers-color-scheme: dark) {
+      background-image:
+        {%- if header.overlay_filter -%}
+        linear-gradient(rgba(0, 0, 0, {{ header.overlay_filter }}),
+                        rgba(0, 0, 0, {{ header.overlay_filter }})),
+        {%- endif -%}
+        url('{{ header.overlay_image | htmlBaseUrl }}');
+    }
   }
-}
-</style>
+  </style>
 
   {% include "partials/hero.njk" %}
 {%- else %}
-<div class="container py-5">
-  <h1 class="display-1">
-    {%- if title %}{{ title | safe }}{%- else %}{{ site.title }}{%- endif %}
-    {%- if subtitle %}
-    <span class="subtitle d-block h-3">
-      {{ subtitle | safe  }}
-    </span>
+  <div class="container py-5">
+    <h1 class="display-1">
+      {%- if title %}{{ title | safe }}{%- else %}{{ site.title }}{%- endif %}
+      {%- if subtitle %}
+      <span class="subtitle d-block h-3">
+        {{ subtitle | safe  }}
+      </span>
+      {%- endif %}
+    </h1>
+    {%- if (description and not excerpt) %}{%- set excerpt = description %}{%- endif %}
+    {%- if excerpt %}
+    <p class="lead">
+      {{ excerpt | safe }}
+    </p>
     {%- endif %}
-  </h1>
-  {%- if (description and not excerpt) %}{%- set excerpt = description %}{%- endif %}
-  {%- if excerpt %}
-  <p class="lead">
-    {{ excerpt | safe }}
-  </p>
-  {%- endif %}
-</div>
+  </div>
 {%- endif %}
 {%- endblock %}
 
+</div>
 <main>
+<a name="initial-scroll"></a>
 {%- if sidebar.nav %}
   <small class="d-md-none mb-5">
     <a class="btn btn-outline-secondary" href="#sidebar">{{ schemata.ui_text[locale].skip_primary_nav }}</a>
