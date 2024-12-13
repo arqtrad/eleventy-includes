@@ -13,9 +13,9 @@
   </symbol>
 </svg>
 
-<div class="container-fluid">
-  <nav id="site-nav" class="masthead">
-    <a href="/" class="site-title">
+<nav id="site-nav" class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <a href="/" class="navbar-brand">
       <svg class="bi me-2" width="36" height="36"><use xlink:href="#arqtrad" fill="currentColor" /></svg>
       {{ site.title }}
       {%- if site.subtitle %}
@@ -24,21 +24,21 @@
       </span>
       {%- endif %}
     </a>
-
     {% if navigation.main %}
-    <ul class="nav">
-      {% for m in navigation.main -%}
-      <li>
-        <a href="{{ m.url }}" {% if m.target %}target="{{ m.target }}" {% endif %}class="nav-link{% if m.class %} {{ m.class }}{% endif %}">
-          {{ m.title | safe }}
-        </a>
-      </li>
-      {%- endfor %}
-    </ul>
-    {% endif %}
-    {% if not (splash) %}
-    <div id="search" class="col-12 col-lg-auto my-1 me-lg-3" role="search">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="navbar-toggler-icon"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        {% for m in navigation.main -%}
+        <li class="nav-item">
+          <a href="{{ m.url }}" {% if m.target %}target="{{ m.target }}" {% endif %}class="nav-link{% if m.class %} {{ m.class }}{% endif %}">
+            {{ m.title | safe }}
+          </a>
+        </li>
+        {%- endfor %}
+      </ul>
     </div>
     {% endif %}
-  </nav>
-</div>
+  </div>
+</nav>
