@@ -1,16 +1,20 @@
+{%- if lang %}
+  {%- set lang %}{{ lang | truncate(2, true, "") }}{%- endset %}
+{%- elif post.data.lang %}
+  {%- set lang %}{{ post.data.lang | truncate(2, true, "") }}{%- endset %}
+{%- elif locale %}
+  {%- set lang %}{{ locale | truncate(2, true, "") }}{%- endset %}
+{%- else %}
+  {%- set lang %}{{ site.locale | truncate(2, true, "") }}{%- endset %}
+{%- endif %}
+
 {%- if coverage.spatial.location.state %}
   {%- set stateCode = coverage.spatial.location.state %}
 {%- elif post.data.coverage.spatial.location.state %}
   {%- set stateCode = post.data.coverage.spatial.location.state %}
 {%- endif %}
-{%- if  schemata.thesaurus[stateCode].name[locale].title %}
-  {%- set stateName = schemata.thesaurus[stateCode].name[locale].title %}
-{%- elif schemata.thesaurus[stateCode].name[lang].title %}
+{%- if schemata.thesaurus[stateCode].name[lang].title %}
   {%- set stateName = schemata.thesaurus[stateCode].name[lang].title %}
-{%- elif  schemata.thesaurus[stateCode].name[site.locale].title %}
-  {%- set stateName = schemata.thesaurus[stateCode].name[site.locale].title %}
-{%- elif schemata.thesaurus[stateCode].name[site_lang].title %}
-  {%- set stateName = schemata.thesaurus[stateCode].name[site_lang].title %}
 {%- endif %}
 
 {%- if coverage.spatial.location.country %}
@@ -24,14 +28,8 @@
     {%- endif %}
   {%- endfor %}
 {%- endif %}
-{%- if  schemata.thesaurus[countryCode].name[locale].title %}
-  {%- set countryName = schemata.thesaurus[countryCode].name[locale].title %}
-{%- elif schemata.thesaurus[countryCode].name[lang].title %}
+{%- if schemata.thesaurus[countryCode].name[lang].title %}
   {%- set countryName = schemata.thesaurus[countryCode].name[lang].title %}
-{%- elif  schemata.thesaurus[countryCode].name[site.locale].title %}
-  {%- set countryName = schemata.thesaurus[countryCode].name[site.locale].title %}
-{%- elif schemata.thesaurus[countryCode].name[site_lang].title %}
-  {%- set countryName = schemata.thesaurus[countryCode].name[site_lang].title %}
 {%- endif %}
 
 {%- if coverage.spatial.location.city %}
