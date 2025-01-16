@@ -23,6 +23,12 @@
 {%- block pagetitle %}
   <style>
   .page__title--overlay {
+    {%- if header.overlay_size %}
+    background-size: {{ header.overlay_size }};
+    {%- endif %}
+    {%- if header.overlay_repeat %}
+    background-repeat: {{ header.overlay_repeat }};
+    {% endif %}
     background-image:
       {%- if header.overlay_filter -%}
       linear-gradient(rgba(255, 255, 255, {{ header.overlay_filter }}),
