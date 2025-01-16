@@ -110,7 +110,6 @@
 <link rel="DCTERMS.subject"
       href="{{ s.href }}"
       title="{{ s.text }}"
-      data-pagefind-index-attrs="title"
     {%- elseif s.text %}
 <meta name="DCTERMS.subject"
       content="{{ s.text }}"
@@ -131,6 +130,7 @@
 <script src="/assets/leaflet/leaflet.js"></script>
 {% include "partials/breadcrumb.njk" %}
 <article data-pagefind-body class="has-infobox order-md-2">
+  <div class="d-none" aria-hidden="true" data-pagefind-index-attrs="title">{{ title }}</div>
   {{ content | safe }}
 </article>
 
@@ -138,7 +138,7 @@
   <div class="card">
     <div id="map" itemprop="hasMap" class="card-img-top"></div>
     <ul class="list-group list-group-flush">
-      <li itemprop="address" data-pagefind-body data-pagefind-weight="7" class="list-group-item">
+      <li itemprop="address" data-pagefind-weight="7" class="list-group-item">
         {%- include "partials/location_slug.njk" %}
       </li>
       <li class="list-group-item">
