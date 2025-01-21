@@ -46,8 +46,7 @@
     {% if post.data.coverage.spatial.location.city %}
       {% set cityName = post.data.coverage.spatial.location.city %}
     {% endif %}
-
-    {
+{
       "media": {
         "url": "{{ post.data.header.teaser }}",
         "caption": "{{ post.data.header.caption }}",
@@ -55,13 +54,9 @@
       },
       {% for event in post.data.coverage.temporal %}
         {% if event.type == "creation" %}
-          {% if event.start_date %}
+          {% if event.start_date or event.end_date %}
           "start_date": {
-            "year": "{{ event.start_date.year }}"
-          },
-          {% elif event.end_date %}
-          "end_date": {
-            "year": "{{ event.end_date.year }}"
+          "year": "{% if event.start_date %}{{ event.start_date.year }}{% elif event.end_date %}{{ event.end_date.year }}{% endif %}"
           },
           {% endif %}
           {% if event.display_date %}
@@ -70,7 +65,7 @@
         {% endif %}
       {% endfor %}
       "text": {
-       "headline": "<a href=\"{{ post.url }}\" class=\"link-primary stretched-link\">{{ post.data.title }}</a>",
+       "headline": "<a href=\"{{ post.url }}\" class=\"stretched-link\">{{ post.data.title }}</a>",
         "text": "<p class=\"lead\">{% if countryCode %}<span data-pagefind-filter=\"country[aria-label]\" aria-label=\"{{ countryName }}\">{{ countryCode | countryEmoji }}</span>{% endif %} {% if stateName %}<span data-pagefind-filter=\"state\">{{ stateName }}</span><i class=\"bi bi-chevron-compact-right\" aria-hidden=\"true\"></i>{% endif %} {% if cityName %}<span data-pagefind-filter=\"city\">{{ cityName }}</span>{% endif %}</p><p>{{ post.data.excerpt }}</p>"
       }
     }{% if not loop.last %},{% endif %}
