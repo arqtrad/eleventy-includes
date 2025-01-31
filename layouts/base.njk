@@ -70,11 +70,11 @@
   </div><!-- /itemscope -->
 </div><!-- /#main -->
 {%- endblock %}
-{%- if sidebar or author_profile %}
-<div class="sidebar" id="sidebar">
+{%- if sidebar or sidebar_nav or author_profile %}
+<aside class="sidebar" id="sidebar">
   <a class="d-md-none" href="#main">{{ schemata.ui_text[locale].skip_content }}</a>
   {%- include "partials/sidebar.njk" -%}
-</div><!-- /.sidebar -->
+</aside><!-- /.sidebar -->
 {%- endif %}
 </main>
 

@@ -9,23 +9,40 @@
   {% include "partials/author-profile.njk" %}
 </div>
 {%- endif %}
-{% if sidebar.nav %}
-<ul class="sidebar__nav">
-  {% for i in navigation[sidebar.nav] %}
-  <li>
-    <a href="{{ i.url }}">{{ i.title }}</a>
-    {% if i.children %}
-    <ul>
-    {% for i in i.children %}
-      <li>
-        <a href="{{ i.url }}">{{ i.title }}</a>
-      </li>
-    {% endfor %}
-    </ul>
-    {% endif %}
-  </li>
+{% if sidebar %}
+  <ul class="list-group">
+  {%- for i in sidebar %}
+  <li class="list-group-item{% if i.class %} {{ i.class }}{%endif %}">
+    {%- if i.title %}
+      <h3>{{ i.title | safe }}</h3>
+    {%- endif %}
+    {%- if i.text %}
+      <p>{{ i.text | safe }}</p>
+    {%- endif %}
+    </li>
+  {%- endfor %}
+  </ul>
+{% endif %}
+{% if sidebar_nav %}
+<div class="list-group">
+  {% for i in navigation[sidebar_nav] %}
+  <a class="list-group-item list-group-item-action{% if i.class %} {{ i.class }}{%endif %}"
+      href="{{ i.url }}">
+      {{ i.title }}
+  </a>
+  {% if i.children %}
+  <div class="list-group list-group-flush">
+  {% for i in i.children %}
+    <a class="list-group-item list-group-item-action{% if i.class %} {{ i.class }}{%endif %}"
+        href="{{ i.url }}">
+      {{ i.title }}
+    </a>
   {% endfor %}
-</ul>
+  </div>
+  {% endif %}
+  </a>
+  {% endfor %}
+</div>
 {% endif %}
 {% if toc %}
 <nav id="toc" data-toggle="toc"></nav>
