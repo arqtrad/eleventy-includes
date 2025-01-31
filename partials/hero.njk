@@ -1,53 +1,36 @@
-<style>
-.page__hero--overlay {
-  background-image:
-    {%- if header.overlay_filter -%}
-    linear-gradient(rgba(255, 255, 255, {{ header.overlay_filter }}),
-                    rgba(255, 255, 255, {{ header.overlay_filter }})),
-    {%- endif -%}
-    url('{{ header.overlay_image | htmlBaseUrl }}');
-  @media(prefers-color-scheme: dark) {
-    background-image:
-      {%- if header.overlay_filter -%}
-      linear-gradient(rgba(0, 0, 0, {{ header.overlay_filter }}),
-                      rgba(0, 0, 0, {{ header.overlay_filter }})),
-      {%- endif -%}
-      url('{{ header.overlay_image | htmlBaseUrl }}');
-  }
-}
-</style>
-
-<div class="position-relative mb-5">
-  <div id="hero" class="page__hero{% if header.overlay_color or header.overlay_image %}--overlay{% endif %}{% if page.url == "/" %} hero-home{% endif %}{% if header.suppressTitle %} suppress-title{% endif %}">
-  {%- if ( sidebar or author_profile or toc ) %}
-    <div class="sidebar">&nbsp;</div>
+<div class="hero-container">
+  <h1>
+    {% if title %}{{ title | safe }}{% else %}{{ site.title }}{% endif %}
+    {% if subtitle -%}
+    <span class="subtitle">
+      {{ subtitle | safe }}
+    </span>
+    {%- endif %}
+  </h1>
+  {% if ( description and not excerpt ) %}{% set excerpt = description %}{% endif %}
+  {% if excerpt %}<div class="lead">
+    {{ excerpt | safe }}
+  </div>{% endif %}
+  {% if header.cta_url %}
+    <p><a href="{{ header.cta_url }}" class="btn btn--light-outline btn--large">{{ header.cta_label }}</a></p>
+  {% endif %}
+  {% if header.actions %}
+    <p class="action">
+    {% for action in header.actions %}
+    <a href="{{ action.href }}"{% if action.btn_class %} class="my-3 btn {{ action.btn_class }}"{% endif %}>
+      {{ action.label | safe }}
+    </a>
+    {% endfor %}
+  {% endif %}
+  {%- if splash %}
+    <div id="search" role="search" class="my-3 mx-auto align-self-center"></div>
   {%- endif %}
-    <div class="container py-5 flex-column{% if ( sidebar or author_profile or toc ) %} has-sidebar{% endif %}">
-      <h1 class="display-1">
-        {% if title %}{{ title | safe }}{% else %}{{ site.title }}{% endif %}
-        {% if subtitle -%}
-        <span class="subtitle hero__subtitle d-block">
-          {{ subtitle | safe }}
-        </span>
-        {%- endif %}
-      </h1>
-      {% if ( description and not excerpt ) %}{% set excerpt = description %}{% endif %}
-      {% if excerpt %}<div class="lead">
-        {{ excerpt | safe }}
-      </div>{% endif %}
-      {% if header.cta_url %}
-        <p><a href="{{ header.cta_url }}" class="btn btn--light-outline btn--large">{{ header.cta_label }}</a></p>
-      {% endif %}
-      {% if header.actions %}
-        <p class="action">
-        {% for action in header.actions %}
-        <a href="{{ action.href }}"{% if action.btn_class %} class="{{ action.btn_class }}"{% endif %}>
-          {{ action.label | safe }}
-        </a>
-        {% endfor %}
-        {% endif %}
-    </div>
   </div>
+  <p class="action skip-hero">
+    <a href="#initial-scroll">
+      <i class="bi bi-chevron-double-down"></i>
+    </a>
+  </p>
   {% if header.caption -%}
   <figcaption class="hero__caption">
     {{ header.caption | safe }}

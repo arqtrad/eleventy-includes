@@ -1,8 +1,8 @@
-{%- if not lang -%}
-  {%- set lang = site.locale -%}
+{%- if not locale -%}
+  {%- set locale = site.locale -%}
 {%- endif %}
-<div class="container">
-  <div class="row my-3 text-center">
+<div class="container triptych">
+  <div class="row mb-3 mt-5 text-center">
     {%- for t in navigation[triptych] %}
     <div class="col-md-6 col-lg-4">
       {% if t.image_path %}
@@ -11,13 +11,13 @@
       </div>
       {% endif %}
       {% if t.title %}
-        <h3 class="fw-normal my-3">{{ t.title | safe }}</h3>
+        <h3>{{ t.title | safe }}</h3>
       {% endif %}
       {% if t.excerpt %}
         <p class="card-text">{{ t.excerpt | safe }}</p>
       {% endif %}
       {% if t.url %}
-        <p><a class="btn{% if t.btn_class %} {{ t.btn_class }}{% endif %}" href="{{ t.url }}">{% if t.btn_label %}{{ t.btn_label }}{% else %}{{ ui_text[lang].more_label }}…{% endif %}</a></p>
+        <p><a class="btn{% if t.btn_class %} {{ t.btn_class }}{% endif %}" href="{{ t.url }}">{% if t.btn_label %}{{ t.btn_label }}{% else %}{{ schemata.ui_text[locale].more_label }}…{% endif %}</a></p>
       {% endif %}
     </div><!--/.col-->
     {%- endfor %}

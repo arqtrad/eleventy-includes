@@ -1,53 +1,63 @@
 <!DOCTYPE html>
-{%- if not lang -%}
-  {%- set lang = site.locale -%}
+{%- if not locale -%}
+  {%- set locale = site.locale -%}
 {%- endif %}
-<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ lang }}" xml:lang="{{ lang }}"{% if page.dir %} dir="{{ dir }}"{% endif %}>
+{% set lang = locale | truncate(2, true, "") %}
+{% set site_lang = site.locale | truncate(2, true, "") %}
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ locale }}" xml:lang="{{ locale }}"{% if page.dir %} dir="{{ dir }}"{% endif %}>
 <head  profile="http://dublincore.org/specifications/dublin-core/dc-html/2008-08-04/">
 {% block htmlhead -%}
   {% include "partials/head.njk" %}
 {%- endblock %}
-<script src="{{ '/assets/lunr/lunr.min.js' | htmlBaseUrl }}"></script>
-<script src="{{ '/assets/js/search.js' | htmlBaseUrl }}"></script>
 </head>
-<body data-bs-spy="scroll" data-bs-target="#toc">
+{%- block bodyClasses %}
+<body{% if classes %} class="{% for class in classes %}{{ class }}{% if not loop.last %} {% endif %}{% endfor %}"{% endif %}>
+{%- endblock %}
 {%- block nav %}
+<div class="page__title{% if header.overlay_color or header.overlay_image %}--overlay{% endif %}{% if splash %} splash{% endif %}">
+  <header>
   {% include "partials/nav.njk" %}
+  </header>
 {%- endblock %}
 
 {%- block pagetitle %}
-{%- if header %}
-  {% include "partials/hero.njk" %}
-{%- else %}
-<div class="container py-5">
-{%- if ( sidebar or author_profile or toc ) %}
-  <div class="sidebar"></div>
-{%- endif %}
-  <h1 class="display-1">
-    {%- if title %}{{ title | safe }}{%- else %}{{ site.title }}{%- endif %}
-    {%- if subtitle %}
-    <span class="subtitle d-block h-3">
-      {{ subtitle | safe  }}
-    </span>
+  <style>
+  .page__title--overlay {
+    {%- if header.overlay_size %}
+    background-size: {{ header.overlay_size }};
     {%- endif %}
-  </h1>
-  {%- if (description and not excerpt) %}{%- set excerpt = description %}{%- endif %}
-  {%- if excerpt %}
-  <p class="lead">
-    {{ excerpt | safe }}
-  </p>
-  {%- endif %}
-</div>
-{%- endif %}
+    {%- if header.overlay_repeat %}
+    background-repeat: {{ header.overlay_repeat }};
+    {% endif %}
+    background-image:
+      {%- if header.overlay_filter -%}
+      linear-gradient(rgba(255, 255, 255, {{ header.overlay_filter }}),
+                      rgba(255, 255, 255, {{ header.overlay_filter }})),
+      {%- endif -%}
+      url('{{ header.overlay_image | htmlBaseUrl }}');
+    @media(prefers-color-scheme: dark) {
+      background-image:
+        {%- if header.overlay_filter -%}
+        linear-gradient(rgba(0, 0, 0, {{ header.overlay_filter }}),
+                        rgba(0, 0, 0, {{ header.overlay_filter }})),
+        {%- endif -%}
+        url('{{ header.overlay_image | htmlBaseUrl }}');
+    }
+  }
+  </style>
+  {% include "partials/hero.njk" %}
 {%- endblock %}
 
+</div>
 <main>
+<a name="initial-scroll"></a>
 {%- if sidebar.nav %}
   <small class="d-md-none mb-5">
-    <a class="btn btn-outline-secondary" href="#sidebar">{{ ui_text[lang].skip_primary_nav }}</a>
+    <a class="btn btn-outline-secondary" href="#sidebar">{{ schemata.ui_text[locale].skip_primary_nav }}</a>
   </small>
 {%- endif %}
-<div id="main" class="container{% if ( sidebar or author_profile or toc ) %} has-sidebar{% endif %}">
+{%- block container %}
+<div id="main" class="container{% if sidebar or author_profile %} has-sidebar{% endif %}">
   <div{% if conformsTo %} itemscope itemtype="{{ conformsTo }}"{% endif %} class="row{% if classes %} {{ classes }}{% endif %}">
   {%- block pagecontent %}
   {%- if page.url != "/" and site.breadcrumbs %}
@@ -59,9 +69,10 @@
   {%- endblock %}
   </div><!-- /itemscope -->
 </div><!-- /#main -->
-{%- if ( sidebar or author_profile or toc ) %}
+{%- endblock %}
+{%- if sidebar or author_profile %}
 <div class="sidebar" id="sidebar">
-  <a class="d-md-none" href="#main">{{ ui_text[lang].skip_content }}</a>
+  <a class="d-md-none" href="#main">{{ schemata.ui_text[locale].skip_content }}</a>
   {%- include "partials/sidebar.njk" -%}
 </div><!-- /.sidebar -->
 {%- endif %}
@@ -74,7 +85,10 @@
 {% endblock %}
 
 {% block pagefooter -%}
-{% include "partials/footer.njk" %}
+{% include "partials/end.njk" %}
+<div class="container-fluid">
+  {% include "partials/footer.njk" %}
+</div><!--/.container-fluid-->
 {%- endblock %}
 </body>
 </html>

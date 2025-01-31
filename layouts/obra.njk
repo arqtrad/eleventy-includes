@@ -18,6 +18,7 @@
 {%- if contributor %}
   {%- for c in contributor %}
 <meta name="DCTERMS.contributor"
+      data-pagefind-index-attrs="content"
       content="{{ c.name }}{% if c.role %} ({{ c.role }}{% if c.attribution %}, {{ c.attribution }}{% endif %}){% endif %}"
       />
   {%- endfor %}
@@ -53,6 +54,7 @@
 {%- if creator %}
   {%- for c in creator %}
 <meta name="DCTERMS.creator"
+      data-pagefind-index-attrs="content"
       content="{{ c.name }}{% if c.attribution %} ({{ c.attribution }}){% endif %}"
       />
   {%- endfor %}
@@ -71,9 +73,11 @@
 <link rel="DCTERMS.identifier"
       href="{{ i.href }}"
       title="{{ label }}"
+      data-pagefind-index-attrs="title"
     {%- else %}
 <meta name="DCTERMS.identifier"
       content="{{ label }}"
+      data-pagefind-index-attrs="content"
     {%- endif %}
       />
   {%- endfor %}
@@ -82,6 +86,7 @@
   {%- for m in format.medium.material %}
 <meta name="DCTERMS.medium"
       content="{% if m.type %}{{ m.type }}: {% endif %}{{ m.text }}"
+      data-pagefind-index-attrs="content"
       />
   {%- endfor %}
 {%- endif %}
@@ -108,56 +113,55 @@
     {%- elseif s.text %}
 <meta name="DCTERMS.subject"
       content="{{ s.text }}"
+      data-pagefind-index-attrs="content"
     {%- endif %}
       />
   {%- endfor %}
 {%- endif %}
 {%- if type %}
-<meta name="DCTERMS.type" content="{{ type.name }}" />
+<meta name="DCTERMS.type"
+      content="{{ type.name }}"
+      data-pagefind-index-attrs="content"
+      />
 {%- endif %}
 {%- endblock %}
 
 {% block pagecontent %}
 <script src="/assets/leaflet/leaflet.js"></script>
 {% include "partials/breadcrumb.njk" %}
-<article class="has-infobox order-md-2">
-  <div aria-hidden="true" class="d-none" itemprop="name">{{ title | safe }}</div>
+<article data-pagefind-body class="has-infobox order-md-2">
+  <div class="d-none" aria-hidden="true" data-pagefind-index-attrs="title">{{ title }}</div>
   {{ content | safe }}
 </article>
 
 <div class="col col-md-4 order-md-1 mb-5">
   <div class="card">
-    <div id="map" itemprop="hasMap" class="card-img-top" style="width: 100%; height: 400px;"></div>
+    <div id="map" itemprop="hasMap" class="card-img-top"></div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item" itemprop="address">
-        {% if coverage.spatial.location.country %}
-          {{ coverage.spatial.location.country | countryEmoji }}
-          {{ ui[coverage.spatial.location.country] }}
-        {% endif %}
-        {% if coverage.spatial.location.state %}
-          {{ coverage.spatial.location.state }}
-          <i class="bi bi-chevron-compact-right" aria-hidden="true"></i>
-        {% endif %}
-        {% if coverage.spatial.location.city %}
-          {{ coverage.spatial.location.city }}
-        {% endif %}
+      <li itemprop="address" data-pagefind-weight="7" class="list-group-item">
+        {%- include "partials/location_slug.njk" %}
       </li>
       <li class="list-group-item">
         {% if date %}
-          Inclusão:
+          {{ schemata.ui_text[locale].date_added }}
         {% else %}
-          Última atualização: 
+          {{ schemata.ui_text[locale].date_label }}
         {% endif %}
         {{ page.date | dateFilter }}
       </li>
       <li class="list-group-item">
         {% if authors %}
-          Responsáveis:
+          {{ schemata.ui_text[locale].author_reg_pl }}:
           {% for author in authors %}
-            {{ members[author].name }}
+          <span data-pagefind-filter="author">
+            {{ members[author].name }}{% if not loop.last %}; {% endif %}
+          </span>
           {% endfor %}
         {% elif author %}
-          Responsável: {{ members[author].name }}
+          {{ schemata.ui_text[locale].author_reg_sg }}:
+          <span data-pagefind-filter="author">
+            {{ members[author].name }}
+          </span>
         {% endif %}
       </li>
     </ul>
@@ -166,38 +170,50 @@
 {% endblock %}
 
 {% block after %}
-<div class="container-fluid text-center my-5">
+<div class="container-fluid text-center mb-5">
 {% if coverage.temporal %}
   {% set timelineData %}
+  {
+    "title": {
+      "text": {
+        "headline": "{{ schemata.ui_text[locale].timeline_label }}"
+      }
+    },
+    "events":
     {{ coverage.temporal | dump | safe }}
+  }
   {% endset %}
   {% include "partials/timeline.njk" %}
 {% endif %}
 
-{% if dwg %}
-{% endif %}
-
-{% if docs %}
-{% endif %}
-
 {% if relation %}
-  <h2 id="iconografia" style="text-transform: capitalize;">{{ ui_text[lang].iconography }}</h2>
-  <div class="row g-3 mx-3">
-  {% for post in media %}
-    {% include "partials/album.njk" %}
+  {% set mediaCollection = collections.media %}
+  <h2 id="desenhos" style="text-transform: capitalize;">{{ schemata.ui_text[locale].dwgs_label }}</h2>
+  <div class="archive__row">
+  {% for rel in relation %}
+    {% if rel.type == ( "isDocumentedBy" or "isSupplementedBy" ) %}
+      {% for post in mediaCollection %}
+        {% if post.fileSlug == rel.relids %}
+          {% include "partials/card-picture.njk" %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
   {% endfor %}
-  </div><!--/.row-->
+  </div><!--/.archive__row-->
+  <h2 id="iconografia" style="text-transform: capitalize;">{{ schemata.ui_text[locale].iconography_label }}</h2>
+  <div class="archive__row">
+  {% for rel in relation %}
+    {% if rel.type == ( "depictedIn" or "imageIs" or "planIs" ) %}
+      {% for post in mediaCollection %}
+        {% if post.fileSlug == rel.relids %}
+          {% include "partials/card-picture.njk" %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+  </div><!--/.archive__row-->
 {% endif %}
 </div><!--/.container-fluid-->
 
-<!--Leaflet map generator-->
-<script>
-  var map = L.map('map').setView([{{ coverage.spatial.location.lat }}, {{ coverage.spatial.location.long }}], {{ coverage.spatial.location.zoom }});
-  const marker = L.marker([{{ coverage.spatial.location.lat }}, {{ coverage.spatial.location.long }}]).addTo(map);
-  const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-  }).addTo(map);
-</script>
-<!--/Leaflet map generator-->
+{% include "partials/leafletjs.njk" %}
 {% endblock %}

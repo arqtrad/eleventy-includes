@@ -22,16 +22,11 @@
 
 <title>{{ metaTitle }}</title>
 <link rel="canonical" href="{{ currentUrl }}" />
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+{%- if css %}{%- for css in css %}
+<link rel="stylesheet" type="text/css" href="{{ css }}" />
+{%- endfor %}{%- endif %}
 <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
-{%- if css %}
-{%- if css[0] %}
-{%- for css in css %}
-<link rel="stylesheet" type="text/css" href="{{ css }}" />
-{%- endfor %}
-{%- else %}
-<link rel="stylesheet" type="text/css" href="{{ css }}" />
-{%- endif %}
-{%- endif %}
 <link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" />
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
@@ -40,18 +35,22 @@
 <meta name="author" content="{{ authorMeta }}" />
 {%- endfor -%}
 {%- if keywords %}
-<meta name="keywords" content="{% for keyword in keywords %}{{ keyword }}{% if not loop.last %}, {% endif %}{% endfor %}" />
+<meta name="keywords"
+      data-pagefind-index-attrs="content"
+      data-pagefind-weight="9"
+      content="{% for keyword in keywords %}{{ keyword }}{% if not loop.last %}, {% endif %}{% endfor %}"
+      />
 {%- endif %}
 <meta property="og:site_name" content="{{ site.title }}" />
 <meta property="og:title" content="{{ title }}" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="{{ currentUrl }}" />
-{%- if social_image or teaser %}
+{%- if social_image or header.teaser %}
 {%- if not social_image -%}
-  {%- set social_image = teaser -%}
+  {%- set social_image = header.teaser -%}
 {%- endif -%}
 <meta name="twitter:card" content="summary_large_image" />
-<meta property="og:image" content="{{ social_image }}" />
+<meta property="og:image" data-pagefind-meta="image[content]" content="{{ social_image }}" />
 <meta name="twitter:image" content="{{ social_image }}" />
 <meta property="og:image:alt" content="Page image for {{ site.title }}" />
 <meta name="twitter:image:alt" content="Page image for {{ site.title }}" />
@@ -60,10 +59,18 @@
 <meta name="twitter:description" content="{{ descriptionMeta }}" />
 <meta property="og:description" content="{{ descriptionMeta }}" />
 {%- endif %}
-<meta name="DCTERMS.title" content="{{ metaTitle }}" />
+<meta name="DCTERMS.title"
+      data-pagefind-index-attrs="content"
+      data-pagefind-meta="title[content]"
+      content="{{ title }}"
+      />
 {%- if dateMeta %}
 <meta name="DCTERMS.date" content="{{ dateMeta }}" />
 {%- endif %}
 {%- if descriptionMeta %}
-<meta name="DCTERMS.description" content="{{ descriptionMeta }}" />
+<meta name="DCTERMS.description"
+      data-pagefind-index-attrs="content"
+      data-pagefind-weight="8"
+      content="{{ descriptionMeta }}"
+      />
 {%- endif %}
