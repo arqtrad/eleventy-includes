@@ -11,7 +11,7 @@
 {%- endblock %}
 </head>
 {%- block bodyClasses %}
-<body{% if classes %} class="{% for class in classes %}{{ class }}{% if not loop.last %} {% endif %}{% endfor %}"{% endif %}>
+<body{% if classes %} class="{% for class in classes %}{{ class }}{% if not loop.last %} {% endif %}{% endfor %}"{% endif %}{% if toc %} data-bs-spy="scroll" data-bs-target="#toc"{% endif %}>
 {%- endblock %}
 {%- block nav %}
 <div class="page__title{% if header.overlay_color or header.overlay_image %}--overlay{% endif %}{% if splash %} splash{% endif %}">
@@ -70,7 +70,7 @@
   </div><!-- /itemscope -->
 </div><!-- /#main -->
 {%- endblock %}
-{%- if sidebar or sidebar_nav or author_profile %}
+{%- if toc or sidebar or sidebar_nav or author_profile %}
 <aside class="sidebar" id="sidebar">
   <a class="d-md-none" href="#main">{{ schemata.ui_text[locale].skip_content }}</a>
   {%- include "partials/sidebar.njk" -%}
