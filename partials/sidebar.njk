@@ -14,7 +14,7 @@
   {%- for i in sidebar %}
   <li class="list-group-item{% if i.class %} {{ i.class }}{%endif %}">
     {%- if i.title %}
-      <h3>{{ i.title | safe }}</h3>
+      <h2 data-toc-skip>{{ i.title | safe }}</h2>
     {%- endif %}
     {%- if i.text %}
       <p>{{ i.text | safe }}</p>
@@ -46,6 +46,6 @@
 {% endif %}
 {% if toc %}
 <nav id="toc" data-toggle="toc">
-  <h3 data-toc-skip>{{ schemata.ui_text[lang].toc_label }}</h3>
+  <h2 data-toc-skip>{{ schemata.ui_text[lang].toc_label }}</h2>
 </nav>
 {% endif %}
