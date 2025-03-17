@@ -14,6 +14,10 @@
 </div>
 
 <script type="text/javascript">
+  var timelineOptions = {
+    language: "pt",
+    scale_factor: 1
+  };
   var timeline_json = {{ timelineData | safe }};
-  window.timeline = new TL.Timeline('timeline-embed', timeline_json, {});
+  window.timeline = new TL.Timeline('timeline-embed', timeline_json, timelineOptions);
 </script>
