@@ -1,0 +1,56 @@
+{%- if not locale -%}
+  {%- set locale = site.locale -%}
+{%- endif %}
+<div class="col">
+  <div class="card h-100 shadow-sm" itemscope itemtype="https://schema.org/Drawing">
+    {% set dwgSlug = ( dwg.subject + '-' + dwg.agent + '-' + dwg.fase + dwg.state + '-' + dwg.form + dwg.view + '-' + dwg.role + dwg.lok + dwg.loe + '-' + dwg.num ) %}
+    {% set dwgSlug %}{{ dwgSlug | upper }}{% endset %}
+    <svg itemprop="image" class="card-img-top" src="/assets/svg/{{ dwgSlug }}.svg" />
+    <div class="card-header" itemprop="name">
+      <h3 class="card-title h6 mb-0">
+        {{ dwg.title | safe }}
+        <span class="text-right">
+        </span>
+      </h3>
+    </div>
+    <div class="card-body">
+      <small class="card-text" itemprop="description">{{ dwg.excerpt | safe }}</small>
+      <div class="btn-group px-2">
+        <a class="btn btn-large btn-outline-primary"
+           href="/assets/svg/{{ dwgSlug }}.svg"
+           alt="Download SVG">
+          <i class="bi bi-filetype-svg" aria-label="Download SVG"></i>
+          Download <span class="smallcaps">SVG</span>
+        </a>
+        <a class="btn btn-large btn-outline-primary px-2"
+           href="/assets/dxf/{{ dwgSlug }}.dxf"
+           alt="Download DXF">
+          <i class="bi bi-file-earmark-excel"></i>
+          Download <span class="smallcaps">DXF</span>
+        </a>
+      </div>
+    </div>
+    <ul class="list-group list-group-flush">
+      {% if dwg.author %}
+      <li class="list-group-item">
+        {% set dwgAuthor = dwg.author %}
+        {{ schemata.ui_text[locale].redraw }}:
+        {{ members[dwgAuthor].name }}
+      </li>
+      {% endif %}
+      {% if dwg.scale %}
+      <li class="list-group-item">
+        {{ schemata.ui_text[locale].scale_label }}:
+        {{ dwg.scale }}
+      </li>
+      {% endif %}
+    </ul>
+    <div class="card-footer text-end">
+      {% set dwgDate = dwg.date | dateFilter %}
+      <small class="text-body-secondary">
+        {{ dwg.rev }} <i class="bi bi-chevron-compact-right"></i>
+        {{ schemata.ui_text[locale].date_label }} {{ dwgDate }}
+      </small>
+    </div>
+  </div>
+</div>

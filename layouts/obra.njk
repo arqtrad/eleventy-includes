@@ -170,7 +170,7 @@
 {% endblock %}
 
 {% block after %}
-<div class="container-fluid text-center mb-5">
+<div class="media-block">
 {% if coverage.temporal %}
   {% set timelineData %}
   {
@@ -186,9 +186,14 @@
   {% include "partials/timeline.njk" %}
 {% endif %}
 
+  <h2 id="desenhos" style="text-transform: capitalize;">{{ schemata.ui_text[locale].dwgs_label }}</h2>
+  <div class="archive__row">
+  {% for dwg in desenhos %}{% if dwg.subject == page.fileSlug %}
+    {% include "partials/card-dwg.njk" %}
+  {% endif %}{% endfor %}
+  </div><!--/.archive__row-->
 {% if relation %}
   {% set mediaCollection = collections.media %}
-  <h2 id="desenhos" style="text-transform: capitalize;">{{ schemata.ui_text[locale].dwgs_label }}</h2>
   <div class="archive__row">
   {% for rel in relation %}
     {% if rel.type == ( "isDocumentedBy" or "isSupplementedBy" ) %}
@@ -213,7 +218,7 @@
   {% endfor %}
   </div><!--/.archive__row-->
 {% endif %}
-</div><!--/.container-fluid-->
+</div><!--/.media-block-->
 
 {% include "partials/leafletjs.njk" %}
 {% endblock %}
