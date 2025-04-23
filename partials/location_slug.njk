@@ -22,11 +22,7 @@
 {%- elif post.data.coverage.spatial.location.country %}
   {%- set countryCode = post.data.coverage.spatial.location.country %}
 {%- elif stateCode %}
-  {%- for r in schemata.thesaurus[stateCode].relation %}
-    {%- if r.type == "isPartOf" %}
-      {%- set countryCode = r.relids %}
-    {%- endif %}
-  {%- endfor %}
+  {%- set countryCode %}{{ stateCode | truncate(2, true, "") }}{%- endset %}
 {%- endif %}
 {%- if schemata.thesaurus[countryCode].name[lang].title %}
   {%- set countryName = schemata.thesaurus[countryCode].name[lang].title %}
